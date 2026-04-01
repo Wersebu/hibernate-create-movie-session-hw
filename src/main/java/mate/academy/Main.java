@@ -13,15 +13,19 @@ import mate.academy.service.MovieSessionService;
 public class Main {
     public static void main(String[] args) {
 
+        Injector injector = Injector.getInstance("mate.academy");
+
         CinemaHallService cinemaHallService =
-                (CinemaHallService) Injector.getInstance("mate.academy");
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+
         CinemaHall hall = new CinemaHall();
         hall.setCapacity(100);
         hall.setDescription("Blue hall");
         hall = cinemaHallService.add(hall);
+        cinemaHallService.getAll().forEach(System.out::println);
 
         MovieService movieService =
-                (MovieService) Injector.getInstance("mate.academy");
+                (MovieService) injector.getInstance(MovieService.class);
         Movie movie = movieService.add(new Movie("Batman"));
 
         MovieSession session = new MovieSession();
@@ -30,7 +34,7 @@ public class Main {
         session.setShowTime(LocalDateTime.now());
 
         MovieSessionService movieSessionService =
-                (MovieSessionService) Injector.getInstance("mate.academy");
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         movieSessionService.add(session);
 
